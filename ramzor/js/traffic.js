@@ -19,6 +19,8 @@ function init() {
     light_red = document.getElementById("light_red");
     light_yellow = document.getElementById("light_yellow");
     light_green = document.getElementById("light_green");
+    redInputDuration = document.getElementById("redInput");
+    greenInputDuration = document.getElementById("greenInput");
     lights = [light_red, light_yellow, light_green];
     redDuration = 4000;
     greenDuration = 4000;
@@ -33,7 +35,12 @@ function setTiming() {
     secondYellowStart=greenEnd - 1000;
     secondYellowEnd = secondYellowStart+3000;
 }
-
+function setDurations()
+{
+    redDuration=Number(redInputDuration.value)*1000;
+    greenDuration=Number(greenInputDuration.value)*1000;
+    setTiming();
+}
 function turnOff() {
     clearInterval(lightInterval);
     clearInterval(repeatInterval);
@@ -59,7 +66,9 @@ function yellow_blink() {
     yellowOn = !yellowOn;
 }
 function repeatStart() {
-    console.log(secondYellowEnd);
+    
+    console.log("red duration: "+redDuration);
+    console.log("green duration :" +greenDuration);
     RepeatTrafficLight();
     repeatInterval = setInterval(RepeatTrafficLight, secondYellowEnd);
 }
@@ -69,7 +78,7 @@ function RepeatTrafficLight()
     lightStart("yellowLight",secondYellowStart,secondYellowEnd,1);
 }
 function startTrafficLight() {
-    console.log("light started!")
+    console.log("light started!");
     lightStart("redLight",0,redDuration,0);
     lightStart("yellowLight",yellowStart,yellowEnd,1);
     lightStart("greenLight",greenStart,greenEnd,2);
