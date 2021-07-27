@@ -66,29 +66,18 @@ function repeatStart() {
 function RepeatTrafficLight()
 {
     startTrafficLight();
-    yellowLight(secondYellowStart,secondYellowEnd);
+    lightStart("yellowLight",secondYellowStart,secondYellowEnd,1);
 }
 function startTrafficLight() {
     console.log("light started!")
-    redLight();
-    yellowLight(yellowStart,yellowEnd);
-    greenLight();
+    lightStart("redLight",0,redDuration,0);
+    lightStart("yellowLight",yellowStart,yellowEnd,1);
+    lightStart("greenLight",greenStart,greenEnd,2);
 }
-function greenLight() {
-    console.log("green is on");
-    greenStartTimeout = setTimeout(colorOn, greenStart, "greenLight", 2);
-    greenEndTimeout = setTimeout(colorOff, greenEnd, "greenLight", 2);
-    timeOutArray.push(greenStartTimeout);
-    timeOutArray.push(greenEndTimeout);
-}
-function yellowLight(start,end) {
-    timeOutArray.push(setTimeout(colorOn, start, "yellowLight", 1));
-    timeOutArray.push(setTimeout(colorOff, end, "yellowLight", 1));
-}
-function redLight() {
-    colorOn("redLight", 0);
-    redEndTimeout = setTimeout(colorOff, redDuration, "redLight", 0);
-    timeOutArray.push(redEndTimeout);
+function lightStart(className,start,end,index)
+{
+    timeOutArray.push(setTimeout(colorOn, start, className, index));
+    timeOutArray.push(setTimeout(colorOff, end, className, index));
 }
 function colorOff(color, index) {
     lights[index].classList.remove(color);
