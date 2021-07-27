@@ -60,7 +60,7 @@ function yellow_blink() {
 }
 function repeatStart() {
     console.log(secondYellowEnd);
-    startTrafficLight();
+    RepeatTrafficLight();
     repeatInterval = setInterval(RepeatTrafficLight, secondYellowEnd);
 }
 function RepeatTrafficLight()
