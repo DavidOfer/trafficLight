@@ -7,9 +7,12 @@ var redDuration;
 var greenDuration;
 var yellowStart;
 var yellowEnd;
+var secondYellowStart;
+var secondYellowEnd;
 var greenStart;
 var greenEnd;
 var timeOutArray;
+var repeat;
 
 
 function init() {
@@ -17,10 +20,9 @@ function init() {
     light_yellow = document.getElementById("light_yellow");
     light_green = document.getElementById("light_green");
     lights = [light_red, light_yellow, light_green];
-    redDuration = 3000;
-    greenDuration = 3000;
+    redDuration = 4000;
+    greenDuration = 4000;
     setTiming();
-    isRepeatOn = false;
     timeOutArray = [];
 }
 function setTiming() {
@@ -28,7 +30,8 @@ function setTiming() {
     yellowEnd = yellowStart + 3000;
     greenStart = yellowEnd;
     greenEnd = yellowEnd + greenDuration;
-
+    secondYellowStart=greenEnd - 1000;
+    secondYellowEnd = secondYellowStart+3000;
 }
 
 function turnOff() {
@@ -56,29 +59,31 @@ function yellow_blink() {
     yellowOn = !yellowOn;
 }
 function repeatStart() {
-    console.log(greenEnd);
+    console.log(secondYellowEnd);
     startTrafficLight();
-    repeatInterval = setInterval(startTrafficLight, greenEnd);
+    repeatInterval = setInterval(RepeatTrafficLight, secondYellowEnd);
+}
+function RepeatTrafficLight()
+{
+    startTrafficLight();
+    yellowLight(secondYellowStart,secondYellowEnd);
 }
 function startTrafficLight() {
     console.log("light started!")
-    turnOff();
     redLight();
-    yellowLight();
+    yellowLight(yellowStart,yellowEnd);
     greenLight();
 }
 function greenLight() {
+    console.log("green is on");
     greenStartTimeout = setTimeout(colorOn, greenStart, "greenLight", 2);
     greenEndTimeout = setTimeout(colorOff, greenEnd, "greenLight", 2);
     timeOutArray.push(greenStartTimeout);
     timeOutArray.push(greenEndTimeout);
 }
-function yellowLight() {
-    yellowStartTimeout = setTimeout(colorOn, yellowStart, "yellowLight", 1);
-    yellowEndTimeout = setTimeout(colorOff, yellowEnd, "yellowLight", 1);
-    timeOutArray.push(yellowStartTimeout);
-    timeOutArray.push(yellowEndTimeout);
-
+function yellowLight(start,end) {
+    timeOutArray.push(setTimeout(colorOn, start, "yellowLight", 1));
+    timeOutArray.push(setTimeout(colorOff, end, "yellowLight", 1));
 }
 function redLight() {
     colorOn("redLight", 0);
