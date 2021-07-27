@@ -28,8 +28,8 @@ function init() {
     timeOutArray = [];
 }
 function setTiming() {
-    yellowStart = redDuration;
-    yellowEnd = yellowStart + 3000;
+    yellowStart = redDuration-2000;
+    yellowEnd = redDuration;
     greenStart = yellowEnd;
     greenEnd = yellowEnd + greenDuration;
     secondYellowStart=greenEnd;
